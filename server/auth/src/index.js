@@ -1,15 +1,19 @@
 const express = require('express');
-const app = express()
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
+const cors = require('cors')
+const db = require('./db')
+
+const app = express()
 const port = process.env.PORT || 3001
 
-mongoose.connect('mongodb://localhost/user', { useMongoClient: true })
-
 app.use(bodyParser.json())
+
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+app.use(cors())
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 const user = require('./route/user.js')(app)
 

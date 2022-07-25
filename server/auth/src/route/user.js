@@ -1,63 +1,66 @@
 const User = require('../model/user')
-const {registerValidation,loginValidation} = require('../validations/validation')
+const {registerValidation,loginValidation} = require('../validation')
 
 module.exports = (app) => {
 
     // create
-    app.post('/register', function (req, res) {
+    app.post('/register', async (req, res) => {
+        console.log('request body is', req.body)
         // validate registration data
         const { error } = registerValidation(req.body)
         if (error) {
+            console.log('err', error)
             return res.status(400).send({message:error['details'][0]['message']})
         }
 
         // validate against existing user
-        const userExists = await User.findOne({email:req.body.email})
+        const userExists = await User.findOne({email:req.body.email}) || undefined
+        console.log('user exits', userExists)
         if (userExists) {
             return res.status(409).send({message:'record already exists'})
         }
 
-        if (!req.body.username || !req.body.password || !req.body.email) {
-            res.json({info: 'missing username, password or email. please resend again.'})
-        }
         var newUser = new User(req.body)
         newUser.save((err) => {
             if (err) {
-                res.json({info: 'error while user insert', error: err})
+                res.status(400).send({info: 'error while user insert', error: err})
             }
-            res.status(201).json({info: 'user created successfully'})
+            res.status(201).send({info: 'user created successfully'})
         })
     })
 
-    // read
-    app.get('/user', (req, res) => {
-        User.find((err, user) => {
-            if (err) {
-                res.json({info: 'error while find user', error: err})
-            }
-            if (user.length > 0) {
-                res.json({info: 'user found successfully', data: user})
-            } else {
-                res.json({info: 'there is no user'})
-            }   
-        })
+    // landing
+    app.get('/', (req, res) => {
+        try {
+            res.status(200).send('working app')
+        } catch(error) {
+            res.status(400).send({message:error})
+        }
     })
     
     // authenticate by username and password
     app.post('/login', (req, res) => {
-        const username = req.body.username
+
+        // validate login data
+        const { error } = loginValidation(req.body)
+        if (error) {
+            console.log('err', error)
+            return res.status(400).send({message:error['details'][0]['message']})
+        }
+
+        const email = req.body.email
         const password = req.body.password
-        User.findOne({username}, function (err, user){
+        User.findOne({email}, function (err, user){
                 if (err) {
-                    res.json({info: 'error finding user', error: err})
+                    res.status(401).send({info: 'error finding user', error: err})
                 } 
                 if (user) {
                     user.comparePassword(password, function(err, isMatch) {
                         if (err) throw err;
                         if (isMatch){
-                            res.json({info: 'user found successfully', data: user})
+                            res.status(200).send({info: 'user found successfully', data: user})
                         } else {
-                            res.json({info: 'bad credentials, please try again'})
+                            res.status(401).send({info: 'bad credentials, please try again'})
                         }
                     });
                 }
@@ -69,14 +72,14 @@ module.exports = (app) => {
     app.get('/user/:id', (req, res) => {
         User.findById(req.params.id, (err, user) => {
             if (user) {
-                res.json({info: 'user found successfully', data: user})
+                res.status(200).send({info: 'user found successfully', data: user})
             } else {
-                res.json({info: 'could not find user', error: err})
+                res.status(400).send({info: 'could not find user', error: err})
             }
         })
     })
 
-    // update
+    // put works like patch
     app.put('/user/:id', (req, res) => {
         User.findById (req.params.id, (err, user) => {
             if (user) {
@@ -85,12 +88,28 @@ module.exports = (app) => {
                 user.save((err) => {
                     if (err) {
                         res.json({info: 'error while updating user', error: err})
-                        // res.status(500).send(err)
                     }
                     res.json({info: 'user has been updated successfully'})
                 })
             } else {
-                res.json({info: 'there is no such user', error: err})
+                res.status(400).send({info: 'there is no such user', error: err})
+            }
+        })
+    })
+
+    // patch record by id
+    app.patch('/user/:id', (req, res) => {
+        User.findById (req.params.id, async (err, user) => {
+            if (user) {
+                try {
+                    await user.updateOne(req.body)
+                    console.log('record updated...')
+                    res.status(200).send({info: 'user has been updated successfully'})
+                } catch (error) {
+                    res.status(500).send({info: 'error while updating user', error: err})
+                }
+            } else {
+                res.status(400).send({info: 'there is no such user', error: err})
             }
         })
     })
@@ -99,10 +118,20 @@ module.exports = (app) => {
     app.delete('/user/:id', (req, res) => {
         User.findByIdAndRemove(req.params.id, (err) => {
             if (err) {
-                res.json({info: 'error while removing user', error: err})
+                res.status(202).send({info: 'error while removing user', error: err})
             }
-            res.json({info: 'user removed successfully'})
+            res.status(200).send({info: 'user removed successfully'})
         })
     })
     
+    // all
+    app.get('/user', (req, res) => {
+        User.find((err, users) => {
+            if (users) {
+                res.status(200).send({info: 'records found successfully', data: users})
+            } else {
+                res.status(400).send({info: 'could not find any record', error: err})
+            }
+        })
+    })
 }
