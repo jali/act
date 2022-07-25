@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  node_api_server:
+    container_name: auth-nem-api
+    build: ./
+    ports:
+      - "3001:3001"
+    networks:
+      - nem-app
+    depends_on: 
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - nem-app
+networks:
+  nem-app:
+    driver: bridge
+volumes:
+  mongodb:
+    driver: local
