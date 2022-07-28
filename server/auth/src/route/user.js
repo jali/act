@@ -1,8 +1,9 @@
 const User = require('../model/user')
+const jsonwebtoken = require('jsonwebtoken')
 const {registerValidation,loginValidation} = require('../validation')
 
 module.exports = (app) => {
-
+    console.log('jwtSecretKey', process.env.TOKEN_SECRET)
     // create
     app.post('/register', async (req, res) => {
         console.log('request body is', req.body)
@@ -58,7 +59,12 @@ module.exports = (app) => {
                     user.comparePassword(password, function(err, isMatch) {
                         if (err) throw err;
                         if (isMatch){
-                            res.status(200).send({info: 'user found successfully', data: user})
+                            // res.status(200).send({info: 'user found successfully', data: user})
+                            // Generate an auth-token
+                            console.log('env token secret', process.env.TOKEN_SECRET)
+                            const token = jsonwebtoken.sign({_id:user._id}, process.env.TOKEN_SECRET)
+                            console.log('token', token)
+                            res.header('auth-token',token).send({'auth-token':token})
                         } else {
                             res.status(401).send({info: 'bad credentials, please try again'})
                         }
