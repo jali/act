@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 require('dotenv/config')
-console.log(process.env)
 
 const db = require('./db')
 
