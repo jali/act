@@ -11,7 +11,6 @@ module.exports = {
     },
     verifyToken: (req, res, next) => {
         try {
-            console.log('header', req.header('auth-token'))
             const token = req.header('auth-token')
             const verifiied = jsonwebtoken.verify(token, process.env.TOKEN_SECRET)
             req.user=verifiied

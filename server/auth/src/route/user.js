@@ -6,7 +6,6 @@ const {registerValidation,loginValidation} = require('../validation')
 module.exports = (app) => {
     // create
     app.post('/register', async (req, res) => {
-        console.log('request body is', req.body)
         // validate registration data
         const { error } = registerValidation(req.body)
         if (error) {
@@ -71,8 +70,7 @@ module.exports = (app) => {
     app.get('/user/:id', jwt.verifyToken, async(req, res) => {
         try {
             const userInfo = await User.findById(req.params.id)
-            console.log('user found after token verificaion', userInfo)
-            if (user) {
+            if (userInfo) {
                 res.status(200).send({info: 'user found successfully', data: userInfo})
             }
         } catch (error) {
@@ -81,6 +79,8 @@ module.exports = (app) => {
     })
 
     // put works like patch
+    // done this way as we rely on mongoos save functionality 
+    // that has a pre method for obscuring passwd in the user schema model
     // return res.status(403).send({info: 'vorbidden'})
     app.put('/user/:id', jwt.verifyToken, async(req, res) => {
         await User.findById (req.params.id, (err, user) => {
@@ -88,9 +88,9 @@ module.exports = (app) => {
                 user = Object.assign(user, req.body)
                 user.save((err) => {
                     if (err) {
-                        res.json({info: 'error while updating user', error: err})
+                        res.status(500).send({info: 'error while updating user', error: err})
                     }
-                    res.json({info: 'user has been updated successfully'})
+                    res.status(200).send({info: 'user has been updated successfully'})
                 })
             } else {
                 res.status(400).send({info: 'there is no such user', error: err})
@@ -127,8 +127,9 @@ module.exports = (app) => {
     })
     
     // all
-    app.get('/user', (req, res) => {
-        return res.status(403).send({info: 'vorbidden'})
+    app.get('/users', (req, res) => {
+        // for testing and development purposes
+        // return res.status(403).send({info: 'vorbidden'})
         User.find((err, users) => {
             if (users) {
                 res.status(200).send({info: 'records found successfully', data: users})
