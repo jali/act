@@ -10,5 +10,5 @@ RUN yarn
 # bundle app source
 COPY . .
 
-EXPOSE 3001
-ENTRYPOINT ["node", "./src/index.js"]
+EXPOSE 8081
+ENTRYPOINT ["/usr/src/app/node_modules/.bin/nodemon"]

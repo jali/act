@@ -5,7 +5,7 @@ services:
     env_file: .env
     build: ./
     ports:
-      - "3010:3010"
+      - "8082:8082"
     networks:
       - nem-app
     depends_on: 
