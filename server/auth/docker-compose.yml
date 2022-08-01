@@ -13,7 +13,7 @@ services:
     links:
       - mongo
   mongo:
-    container_name: mongo
+    container_name: auth-mongo
     image: mongo:latest
     volumes:
       - mongodb:/data/db
