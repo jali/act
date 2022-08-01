@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  node_api_server:
+    container_name: profile-nem-api
+    env_file: .env
+    build: ./
+    ports:
+      - "3010:3010"
+    networks:
+      - nem-app
+    depends_on: 
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: profile-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - nem-app
+networks:
+  nem-app:
+    driver: bridge
+volumes:
+  mongodb:
+    driver: local
