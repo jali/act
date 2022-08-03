@@ -17,6 +17,14 @@ const profileSchema = mongoose.Schema({
     birthday: {
         type: Date
     },
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    active: {
+        type: Boolean,
+        default: true
+    },
     avatar: {
         type: String,
         default: 'https://www.pinclipart.com/picdir/middle/568-5683685_https-cdn-tpet-co-uk-wp-avatar-clipart.png'

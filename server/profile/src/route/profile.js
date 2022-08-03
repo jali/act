@@ -10,24 +10,35 @@ module.exports = (app) => {
         if (error) {
             return res.status(400).send({message:error['details'][0]['message']})
         }
+        const user_id = await req.user._id
         // validate against existing profile user data
-        const userExists = await Profile.findOne({user_id:req.body.user_id}) || undefined
+        const userExists = await Profile.findOne({user_id: user_id}) || undefined
         if (userExists) {
             return res.status(409).send({message:'record already exists'})
         }
-        var newProfile = new Profile(req.body)
-        newProfile.save((err) => {
+        const requestBodyData = {user_id, ...req.body}
+        var newProfile = new Profile(requestBodyData)
+        await newProfile.save((err) => {
             if (err) {
                 res.status(400).send({info: 'error while creating user profile', error: err})
+            } else {
+                res.status(201).send({info: 'user profile created successfully'})
             }
-            res.status(201).send({info: 'user profile created successfully'})
         })
     })
 
     // landing
-    app.get('/profile', (req, res) => {
+    app.get('/profile', jwt.verifyToken, async(req, res) => {
+        // get own record without param
+        const user_id = await req.user._id
         try {
-            res.status(200).send('working app')
+            const profileInfo = await Profile.findOne({user_id: user_id})
+            if (profileInfo) {
+                res.status(200).send({info: 'profile found successfully', data: profileInfo})
+            } else {
+                res.status(204).send({})
+            }
+            
         } catch(error) {
             res.status(400).send({message:error})
         }
@@ -35,11 +46,13 @@ module.exports = (app) => {
 
     // access with valid token
     // read one by user id
-    app.get('/profile/user/:id', jwt.verifyToken, async(req, res) => {
+    app.get('/profile/:id', jwt.verifyToken, async(req, res) => {
         try {
-            const profileInfo = await Profile.findOne({user_id: req.params.id})
+            const profileInfo = await Profile.findById(req.params.id)
             if (profileInfo) {
                 res.status(200).send({info: 'profile found successfully', data: profileInfo})
+            } else {
+                res.status(404).send({info: 'record not found'})
             }
         } catch (error) {
             res.status(400).send({info: 'bad request', error: error})
@@ -47,34 +60,45 @@ module.exports = (app) => {
     })
 
     // patch record by id
-    app.patch('/profile/:id', (req, res) => {
-        Profile.findById (req.params.id, jwt.verifyToken, async (err, profile) => {
-            if (profile) {
-                try {
-                    await profile.updateOne(req.body)
-                    res.status(200).send({info: 'profile has been updated successfully'})
-                } catch (error) {
-                    res.status(500).send({info: 'error while updating profile', error: err})
-                }
-            } else {
-                res.status(400).send({info: 'there is no such profile', error: err})
-            }
-        })
+    app.patch('/profile/user/:id', jwt.verifyToken, async(req, res) => {
+        // allow update own record only
+        const user_id = await req.user._id
+
+        if (user_id != req.params.id) {
+            res.status(403).send({info: 'operation not allowed'})
+        }
+        try {
+            // prevent integrity manipulation
+            delete req.body.user_id
+            
+            // update record
+            Profile.findByIdAndUpdate({user_id: req.params.id}, req.body)
+            res.status(200).send({info: 'profile has been updated successfully'})
+        } catch (e) {
+            res.status(400).send({info: 'error while updating profile', error: e})
+        }
     })
 
     // delete
-    app.delete('/profile/:id', (req, res) => {
-        return res.status(403).send({info: 'vorbidden'})
-        Profile.findByIdAndRemove(req.params.id, (err) => {
-            if (err) {
-                res.status(202).send({info: 'error while removing profile', error: err})
+    app.delete('/admin/profile/:id', jwt.verifyToken, async(req, res) => {
+        // accessed through admin gateway using api key
+        // user cannot delete profile
+        // return res.status(403).send({info: 'vorbidden'})
+        try {
+            const deleted = await Profile.findByIdAndDelete(req.params.id)
+            if (deleted) {
+                res.status(200).send({info: 'profile has been deleted successfully', id: deleted})
+            } else {
+                res.status(204).send({info: 'profile not found'})
             }
-            res.status(200).send({info: 'profile removed successfully'})
-        })
+        } catch (err) {
+            res.status(400).send({info: 'error while deleting profile', error: err})
+        }
     })
     
     // get all profiles
-    app.get('/profiles', (req, res) => {
+    app.get('/admin/profiles', (req, res) => {
+        // accessed through admin gateway using api key
         // for testing and development purposes
         // return res.status(403).send({info: 'vorbidden'})
         Profile.find((err, profiles) => {
