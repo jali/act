@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  node_api_server:
+    container_name: comment-nem-api
+    env_file: .env
+    build: ./
+    ports:
+      - "8083:8083"
+    networks:
+      - nem-app
+    depends_on: 
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: comment-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27019:27017"
+    networks:
+      - nem-app
+networks:
+  nem-app:
+    driver: bridge
+volumes:
+  mongodb:
+    driver: local
