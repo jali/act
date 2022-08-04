@@ -8,5 +8,14 @@ module.exports = (app) => {
         
     })
 
+     // landing
+     app.get('/chat', (req, res) => {
+        try {
+            res.status(200).send('working app')
+        } catch(error) {
+            res.status(400).send({message:error})
+        }
+    })
+
     
 }
