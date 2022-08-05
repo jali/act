@@ -9,12 +9,12 @@ const commentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    created_by: {},
+    liked_by: [],
     created: {
         type: Date,
         default: Date.now
-    },
-    profile_data: [],
-    liked_data: []
+    }
 })
 
 module.exports = mongoose.model('Comment', commentSchema)
