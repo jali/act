@@ -18,7 +18,7 @@ module.exports = (app) => {
         }
         const requestBodyData = {user_id, ...req.body}
         var newProfile = new Profile(requestBodyData)
-        await newProfile.save((err) => {
+        newProfile.save((err) => {
             if (err) {
                 res.status(400).send({info: 'error while creating user profile', error: err})
             } else {
