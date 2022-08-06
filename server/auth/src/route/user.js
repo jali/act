@@ -1,4 +1,3 @@
-const { userInfo } = require('os')
 const User = require('../model/user')
 const jwt = require('../security')
 const {registerValidation,loginValidation} = require('../validation')
@@ -33,7 +32,7 @@ module.exports = (app) => {
             res.status(400).send({message:error})
         }
     })
-    // authenticate by username and password
+    // authenticate by email and password
     app.post('/login', (req, res) => {
         // validate login data
         const { error } = loginValidation(req.body)
@@ -118,11 +117,11 @@ module.exports = (app) => {
     // delete
     app.delete('/user/:id', (req, res) => {
         return res.status(403).send({info: 'vorbidden'})
-        User.findByIdAndRemove(req.params.id, (err) => {
+        User.findByIdAndDelete(req.params.id, (err) => {
             if (err) {
-                res.status(202).send({info: 'error while removing user', error: err})
+                res.status(202).send({info: 'error while deleting user', error: err})
             }
-            res.status(200).send({info: 'user removed successfully'})
+            res.status(200).send({info: 'user deleted successfully'})
         })
     })
     
