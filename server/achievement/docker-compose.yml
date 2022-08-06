@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  node_api_server:
+    container_name: achievement-nem-api
+    env_file: .env
+    build: ./
+    ports:
+      - "8084:8084"
+    networks:
+      - nem-app
+    depends_on: 
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: achievement-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27020:27017"
+    networks:
+      - nem-app
+networks:
+  nem-app:
+    driver: bridge
+volumes:
+  mongodb:
+    driver: local
