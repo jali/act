@@ -47,10 +47,7 @@ module.exports = (app) => {
 
     // delete comment
     app.delete('/comment/:id', jwt.verifyToken, async(req, res) => {
-        // todo: add checks to allow method for owner only
         try {
-            const user = await req.user
-            const condition = {_id: req.params.id, owner_id: user._id}
             const deleted = await Comment.findByIdAndDelete(req.params.id)
             if (deleted) {
                 res.status(200).send({info: 'comment has been deleted successfully', id: deleted})
