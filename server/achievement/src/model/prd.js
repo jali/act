@@ -1,21 +1,19 @@
 const mongoose = require('mongoose')
 
-const storySchema = mongoose.Schema({
+const prdSchema = mongoose.Schema({
     title: {
         type: String
     },
     destription: {
-
+        type: String
     },
-    user_id: {
-        type: String,
-        required: true
+    author_id: {
+        type: String
     },
-    owner: {},
     created: {
         type: Date,
         default: Date.now
     }
 })
 
-module.exports = mongoose.model('Story', storySchema)
+module.exports = mongoose.model('Prd', prdSchema)
