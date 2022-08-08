@@ -3,7 +3,7 @@ const jwt = require('../security')
 const { profileValidation } = require('../validation')
 
 module.exports = (app) => {
-    // // create
+    // create
     app.post('/profile', jwt.verifyToken, async (req, res) => {
         // validate profile data
         const { error } = profileValidation(req.body)
