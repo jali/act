@@ -22,5 +22,5 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 const user = require('./route/user.js')(app)
 
 const server = app.listen(port, () => {
-    console.log(`User service listening at http://0.0.0.0:${port}`)
+    console.log(`Auth service listening at http://0.0.0.0:${port}`)
 })

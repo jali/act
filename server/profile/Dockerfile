@@ -10,5 +10,5 @@ RUN yarn
 # bundle app source
 COPY . .
 
-EXPOSE 8084
+EXPOSE 8080
 ENTRYPOINT ["/usr/src/app/node_modules/.bin/nodemon"]

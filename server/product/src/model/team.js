@@ -1,6 +1,16 @@
 const mongoose = require('mongoose')
 
 const profileSchema = mongoose.Schema({
+    prd_id: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    profile_id: {
+        type: String,
+        unique: true,
+        required: true
+    },
     user_id: {
         type: String,
         unique: true,
@@ -13,17 +23,6 @@ const profileSchema = mongoose.Schema({
     lastname: {
         type: String,
         required: true
-    },
-    birthday: {
-        type: Date
-    },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    active: {
-        type: Boolean,
-        default: true
     },
     avatar: {
         type: String,

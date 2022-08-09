@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://mongo:27017/comment';
+const connectionString = 'mongodb://comment-mongo:27017/comment';
 
 mongoose.connect(connectionString, { useNewUrlParser: true }).catch((e) => {
   console.error('Connection error', e.message);

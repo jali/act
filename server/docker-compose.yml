@@ -1,0 +1,113 @@
+version: '3.7'
+
+services:
+  auth-service:
+    container_name: auth-service
+    build: 
+      context: ./auth
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - PORT=8080
+      - TOKEN_SECRET=guHPH6fJv6P2vB6qsSDbyObz+JAnvQMfguFDLKMeMedmZPe5hUSKv2+5Ym8EPrUcRwMezAD/F553HdSuHWyv7g==
+    networks:
+      - nem-app
+    depends_on: 
+      - auth-mongo
+    links:
+      - auth-mongo
+  auth-mongo:
+    container_name: auth-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/auth/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - nem-app
+  
+  product-service:
+    container_name: product-service
+    build: 
+      context: ./product
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      - PORT=8080
+      - TOKEN_SECRET=guHPH6fJv6P2vB6qsSDbyObz+JAnvQMfguFDLKMeMedmZPe5hUSKv2+5Ym8EPrUcRwMezAD/F553HdSuHWyv7g==
+    networks:
+      - nem-app
+    depends_on: 
+      - product-mongo
+    links:
+      - product-mongo
+  product-mongo:
+    container_name: product-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/product/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - nem-app
+  
+  comment-service:
+    container_name: comment-service
+    build: 
+      context: ./comment
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    environment:
+      - PORT=8080
+      - TOKEN_SECRET=guHPH6fJv6P2vB6qsSDbyObz+JAnvQMfguFDLKMeMedmZPe5hUSKv2+5Ym8EPrUcRwMezAD/F553HdSuHWyv7g==
+    networks:
+      - nem-app
+    depends_on: 
+      - comment-mongo
+    links:
+      - comment-mongo
+  comment-mongo:
+    container_name: comment-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/comment/data/db
+    ports:
+      - "27019:27017"
+    networks:
+      - nem-app
+  
+  profile-service:
+    container_name: profile-service
+    build: 
+      context: ./profile
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    environment:
+      - PORT=8080
+      - TOKEN_SECRET=guHPH6fJv6P2vB6qsSDbyObz+JAnvQMfguFDLKMeMedmZPe5hUSKv2+5Ym8EPrUcRwMezAD/F553HdSuHWyv7g==
+    networks:
+      - nem-app
+    depends_on: 
+      - profile-mongo
+    links:
+      - profile-mongo
+  profile-mongo:
+    container_name: profile-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb:/profile/data/db
+    ports:
+      - "27020:27017"
+    networks:
+      - nem-app
+
+networks:
+  nem-app:
+    driver: bridge
+volumes:
+  mongodb:
+    driver: local
