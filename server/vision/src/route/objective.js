@@ -3,8 +3,8 @@ const Objective = require('../model/objective')
 const jwt = require('../security')
 
 const router = new express.Router()
-// create objective or narrative for a given product
-router.post(/\/[objective|narrative]\/prd\/:id/, jwt.verifyToken, async (req, res) => {
+// create objective or narrative for a given vision
+router.post(/\/[objective|narrative]\/vision\/:id/, jwt.verifyToken, async (req, res) => {
     // validate objective/narrative data
     const { error } = storyValidation(req.body)
     if (error) {
@@ -24,10 +24,10 @@ router.post(/\/[objective|narrative]\/prd\/:id/, jwt.verifyToken, async (req, re
 })
 
 // landing
-router.get('/objective/prd/:id', jwt.verifyToken, async(req, res) => {
-    // get all objectives by prd id
+router.get('/objective/vision/:id', jwt.verifyToken, async(req, res) => {
+    // get all objectives by vision id
     try {
-        const objectives = await Objective.find({prd_id: req.params.id})
+        const objectives = await Objective.find({vision_id: req.params.id})
         if (objectives) {
             res.status(200).send({info: 'objectives found successfully', data: objectives})
         } else {

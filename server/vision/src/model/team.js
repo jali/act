@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const profileSchema = mongoose.Schema({
-    prd_id: {
+const teamSchema = mongoose.Schema({
+    vision_id: {
         type: String,
         unique: true,
         required: true
@@ -30,4 +30,4 @@ const profileSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Profile', profileSchema)
+module.exports = mongoose.model('Team', teamSchema)

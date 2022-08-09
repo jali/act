@@ -5,10 +5,10 @@ const objectiveSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    prd_id: {
+    vision_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Prd"
+        ref: "Vision"
     },
     created: {
         type: Date,

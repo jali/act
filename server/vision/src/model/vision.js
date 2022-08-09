@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const prdSchema = mongoose.Schema({
+const visionSchema = mongoose.Schema({
     title: {
         type: String
     },
@@ -16,4 +16,4 @@ const prdSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Prd', prdSchema)
+module.exports = mongoose.model('Vision', visionSchema)

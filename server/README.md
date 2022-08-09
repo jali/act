@@ -17,7 +17,7 @@ Multiple services are listed under the folder server. Each server is running usi
 ### To recreate one service while all services are built and ran in detach mode
     docker-compose up -d --force-recreate --no-deps [service name]
     e.g.
-    docker-compose up -d --force-recreate --no-deps product-service
+    docker-compose up -d --force-recreate --no-deps auth-service
 
 ### To enter mongo shell
     docker exec -it [container_id] sh   // to enter mongodb container shell

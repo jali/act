@@ -1,6 +1,6 @@
 const joi = require('joi')
 
-const storyValidation = (data) => {
+const visionValidation = (data) => {
     const schemaValidation = joi.object({
         title:joi.string().required().min(2).max(256),
         description:joi.string().required().min(6).max(256),
@@ -9,4 +9,4 @@ const storyValidation = (data) => {
     return schemaValidation.validate(data)
 }
 
-module.exports.storyValidation = storyValidation
+module.exports.visionValidation = visionValidation

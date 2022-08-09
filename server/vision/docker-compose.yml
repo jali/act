@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   node_api_server:
-    container_name: achievement-nem-api
+    container_name: vision-nem-api
     env_file: .env
     build: ./
     ports:
@@ -13,7 +13,7 @@ services:
     links:
       - mongo
   mongo:
-    container_name: achievement-mongo
+    container_name: vision-mongo
     image: mongo:latest
     volumes:
       - mongodb:/data/db
