@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
+import useAuth from 'features/auth/use';
 
 const PrivateRoute = ({ children }) => {
     const location = useLocation();
-    // const isAuthenticated = useIsAuthenticated();
-    const isAuthenticated = false;
-    console.log('is authenticated', isAuthenticated)
+    const { data } = useAuth();
+    const isAuthenticated = !!data;
     return (
         isAuthenticated ? (
             children

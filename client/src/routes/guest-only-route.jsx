@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import useAuth from 'features/auth/use';
 
 export function getRedirectPath(auth) {
     return auth ? '/' : null;
@@ -7,9 +8,7 @@ export function getRedirectPath(auth) {
 
 const GuestOnlyRoute = ({ children }) => {
     const location = useLocation();
-    
-    const data = false;
-    console.log('data', data)
+    const { data } = useAuth();
     const redirectPath = getRedirectPath(!!data);
     console.log('redirect path', redirectPath)
     return (
