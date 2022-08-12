@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/output
 
 # production
 /build
@@ -21,3 +22,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+dist
+.idea
+.docker_host
+.tag
+assets.json
+.happypack
+package.json-e
+newrelic_agent.log
+nohup.out
+.gitmodules
+.vscode
+.project
+.settings/

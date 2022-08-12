@@ -2,15 +2,26 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/**/*.style.{js,jsx}",
+      "!src/node_modules/",
+      "!src/config/*.js",
+      "!src/routes/*.jsx",
+      "!src/setupTests.js",
+      "!src/jest.config.js",
+      "!src/{index,history,config,theme,reportWebVitals}.js",
+      "!src/store/index.js",
+      "!src/reportWebVitals.js"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@reduxjs/toolkit": "^1.8.4",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,6 +38,7 @@
     "build": "react-scripts build",
     "build:prod": "REACT_APP_STAGE=prod GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
+    "unit": "CI=true react-scripts test --silent --env=jsdom --coverage --coverageDirectory=./output/coverage --colors --runInBand",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,6 +60,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.4.3",
     "redux-devtools-extension": "^2.13.9"
   }
 }

@@ -11,7 +11,7 @@ const theme = createTheme({
 export default function App() {
     return (
         <ThemeProvider theme={theme}>
-            <AppRoutes />
+            <AppRoutes  data-testid='main-app-routes'/>
         </ThemeProvider>
     );
 }
