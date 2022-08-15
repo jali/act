@@ -52,7 +52,7 @@ module.exports = (app) => {
                         try {
                             const data =  {_id: user.id, username: user.username, role:user.role}
                             const token = jwt.generateToken(data)
-                            res.header('auth-token',token).send({'auth-token':token})
+                            res.header('auth_token',token).send({'auth_token':token})
                         } catch (error) {
                             res.status(500).send({info: 'something went wrong'})
                         }

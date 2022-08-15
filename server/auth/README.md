@@ -1,5 +1,5 @@
 # Authentication and authorisation service
-AuthN differs from AuthZ as AuthN is used to authenticate user's identity and AuthZ is for authorising access to resourses. This service is providing one auth-token for identification and resourse as all services will run behind a gateway server and there's no need to define policy and grant access to different kind of users. The auth-token currently contains also the role which will allow some sort of restriction to team members versus team owner.
+AuthN differs from AuthZ as AuthN is used to authenticate user's identity and AuthZ is for authorising access to resourses. This service is providing one auth_token for identification and resourse as all services will run behind a gateway server and there's no need to define policy and grant access to different kind of users. The auth_token currently contains also the role which will allow some sort of restriction to team members versus team owner.
 
 ## List of commands
 
