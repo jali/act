@@ -10,7 +10,6 @@ const GuestOnlyRoute = ({ children }) => {
     const location = useLocation();
     const { data } = useAuth();
     const redirectPath = getRedirectPath(!!data);
-    console.log('redirect path', redirectPath)
     return (
         !redirectPath ? (
             children

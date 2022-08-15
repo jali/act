@@ -15,6 +15,7 @@ const LoginForm = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                rules={{ required: "Required!" }}
                 autoFocus
             />
             <TextField
@@ -25,6 +26,7 @@ const LoginForm = () => {
                 label="Password"
                 type="password"
                 id="password"
+                rules={{ required: "Required!" }}
                 autoComplete="current-password"
             />
             <FormControlLabel
