@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Layout from 'components/layout';
 import useAuth from 'features/auth/use';
 
 const Home = () => {
-    const { handleLogout, loading } = useAuth();
+    const { loading } = useAuth();
     return (
-        <>
+        <>  
+            <Layout/>
             {loading && <i>loading...</i>}
-            <Button variant='contained' onClick={handleLogout}>Log out</Button>
+            
             <Box sx={{ mt: 1 }}>
                 <Link to='/login'>can you go to login page which is a guest only route?</Link>
             </Box>

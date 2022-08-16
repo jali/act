@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import TextField from 'components/text-field';
+import TextField from 'components/form/text-field';
 
 const LoginForm = () => {
     return(

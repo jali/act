@@ -1,15 +1,12 @@
 import React from 'react';
 import Avatar from '@mui/material/Avatar';
-
-import CssBaseline from '@mui/material/CssBaseline';
-
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import Alert from '@mui/material/Alert';
 import { useForm, FormProvider } from 'react-hook-form';
 import LoginForm from './form';
 import useAuth from 'features/auth/use';
@@ -29,7 +26,7 @@ function Copyright(props) {
 }
 
 export default function SignIn() {
-    const { handleLogin, loading } = useAuth();
+    const { handleLogin, loading, error } = useAuth();
     const form = useForm({
         defaultValues: {
             email: '',
@@ -42,8 +39,9 @@ export default function SignIn() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      
       {loading && <i>loading...</i>}
+      {error && <Alert severity="error">{error.data.info}</Alert>}
       <Box
         sx={{
           marginTop: 8,

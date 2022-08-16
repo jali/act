@@ -1,3 +1,4 @@
+import JWT_DECODE from 'jwt-decode';
 import {
     getStorageItem,
     removeStorageItem,
@@ -24,11 +25,17 @@ export function getAuthToken() {
     return getStorageItem('access_token');
 }
 
-export function getExpiresAt() {
-    return getStorageItem('expires_at');
-}
-
 export function postLogin(data) {
     return post(AUTH_BASE_URL + '/login', data);
 }
 
+export function decodedTokenData(token) {
+    const decoded = JWT_DECODE(token);
+    return decoded;
+}
+
+export function hasTokenExpired(exp) {
+    const now = Date.now();
+    const expiresAt = parseInt(exp);
+    return expiresAt && now >= (expiresAt * 1000);
+}
