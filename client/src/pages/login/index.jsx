@@ -6,26 +6,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import LinearProgress from '@mui/material/LinearProgress';
 import Alert from '@mui/material/Alert';
 import { useForm, FormProvider } from 'react-hook-form';
+import Footer from 'components/layout/footer';
 import LoginForm from './form';
 import useAuth from 'features/auth/use';
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-            Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 export default function SignIn() {
+    
     const { handleLogin, loading, error } = useAuth();
     const form = useForm({
         defaultValues: {
@@ -38,47 +27,47 @@ export default function SignIn() {
     const onError = (error) => console.log(error);
 
   return (
+    <>
+    {loading && <LinearProgress />}
     <Container component="main" maxWidth="xs">
-      
-      {loading && <i>loading...</i>}
-      {error && <Alert severity="error">{error.data.info}</Alert>}
-      <Box
+        {error && <Alert severity="error">{error.data.info}</Alert>}
+        <Box
         sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
         }}
-      >
+        >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+            <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+            Sign in
         </Typography>
-        <Box   noValidate sx={{ mt: 1 }}>
-          <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onError)}>
-                <LoginForm />
-            </form>
-          </FormProvider>
-          
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-          {/* </form> */}
+            <Box   noValidate sx={{ mt: 1 }}>
+                <FormProvider {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+                    <LoginForm />
+                </form>
+                </FormProvider>
+                
+                <Grid container>
+                <Grid item xs>
+                    <Link href="#" variant="body2">
+                    Forgot password?
+                    </Link>
+                </Grid>
+                <Grid item>
+                    <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                    </Link>
+                </Grid>
+                </Grid>
+                <Footer sx={{ mt: 8, mb: 4 }} />
+            </Box>
         </Box>
-      </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
+    </>
   );
 }
