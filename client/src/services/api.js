@@ -5,7 +5,7 @@ export async function getCommonHeaders() {
     const headers = {'Content-Type': 'application/json'};
     const token = getAuthToken();
     if (token) {
-        headers['auth-token'] = token;
+        headers['auth_token'] = token;
     }
     return headers;
 }
