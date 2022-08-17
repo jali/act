@@ -34,7 +34,7 @@ module.exports = (app) => {
         try {
             const profileInfo = await Profile.findOne({user_id: user_id})
             if (profileInfo) {
-                res.status(200).send({info: 'profile found successfully', data: profileInfo})
+                res.status(200).send({info: 'profile found successfully', profileInfo})
             } else {
                 res.status(204).send({})
             }
@@ -50,7 +50,7 @@ module.exports = (app) => {
         try {
             const profileInfo = await Profile.findById(req.params.id)
             if (profileInfo) {
-                res.status(200).send({info: 'profile found successfully', data: profileInfo})
+                res.status(200).send({info: 'profile found successfully', profileInfo})
             } else {
                 res.status(404).send({info: 'record not found'})
             }
@@ -103,7 +103,7 @@ module.exports = (app) => {
         // return res.status(403).send({info: 'vorbidden'})
         Profile.find((err, profiles) => {
             if (profiles) {
-                res.status(200).send({info: 'records found successfully', data: profiles})
+                res.status(200).send({info: 'records found successfully', profiles})
             } else {
                 res.status(400).send({info: 'could not find any record', error: err})
             }
