@@ -8,12 +8,12 @@ module.exports = (app) => {
         // validate registration data
         const { error } = registerValidation(req.body)
         if (error) {
-            return res.status(400).send({message:error['details'][0]['message']})
+            return res.status(400).send({info:error['details'][0]['message']})
         }
         // validate against existing user
         const userExists = await User.findOne({email:req.body.email}) || undefined
         if (userExists) {
-            return res.status(409).send({message:'record already exists'})
+            return res.status(409).send({info:'record already exists'})
         }
         var newUser = new User(req.body)
         newUser.save((err) => {
@@ -29,7 +29,7 @@ module.exports = (app) => {
         try {
             res.status(200).send('working app')
         } catch(error) {
-            res.status(400).send({message:error})
+            res.status(400).send({info: error})
         }
     })
     // authenticate by email and password
@@ -37,7 +37,7 @@ module.exports = (app) => {
         // validate login data
         const { error } = loginValidation(req.body)
         if (error) {
-            return res.status(400).send({message:error['details'][0]['message']})
+            return res.status(400).send({info: error['details'][0]['message']})
         }
         const email = req.body.email
         const password = req.body.password

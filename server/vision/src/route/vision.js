@@ -18,7 +18,7 @@ router.post('/vision', jwt.verifyToken, async (req, res) => {
     const requestBodyData = {author_id, ...req.body}
     const { error } = visionValidation(requestBodyData)
     if (error) {
-        return res.status(400).send({message:error['details'][0]['message']})
+        return res.status(400).send({info: error['details'][0]['message']})
     }
 
     var newVision = new Vision(requestBodyData)

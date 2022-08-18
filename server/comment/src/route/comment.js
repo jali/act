@@ -8,7 +8,7 @@ module.exports = (app) => {
         // validate comment data
         const { error } = commentValidation(req.body)
         if (error) {
-            return res.status(400).send({message:error['details'][0]['message']})
+            return res.status(400).send({info:error['details'][0]['message']})
         }
         const user = await req.user
         const requestBodyData = {...req.body, created_by: {user_id: user._id, username: user.username}}

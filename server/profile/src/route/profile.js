@@ -8,13 +8,13 @@ module.exports = (app) => {
         // validate profile data
         const { error } = profileValidation(req.body)
         if (error) {
-            return res.status(400).send({message:error['details'][0]['message']})
+            return res.status(400).send({info:error['details'][0]['message']})
         }
         const user_id = await req.user._id
         // validate against existing profile user data
         const userExists = await Profile.findOne({user_id: user_id}) || undefined
         if (userExists) {
-            return res.status(409).send({message:'record already exists'})
+            return res.status(409).send({info:'record already exists'})
         }
         const requestBodyData = {user_id, ...req.body}
         var newProfile = new Profile(requestBodyData)
@@ -22,7 +22,7 @@ module.exports = (app) => {
             if (err) {
                 res.status(400).send({info: 'error while creating user profile', error: err})
             } else {
-                res.status(201).send({info: 'user profile created successfully'})
+                res.status(201).send({info: 'user profile created successfully', data: true})
             }
         })
     })

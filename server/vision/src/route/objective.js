@@ -8,7 +8,7 @@ router.post(/\/[objective|narrative]\/vision\/:id/, jwt.verifyToken, async (req,
     // validate objective/narrative data
     const { error } = storyValidation(req.body)
     if (error) {
-        return res.status(400).send({message:error['details'][0]['message']})
+        return res.status(400).send({info: error['details'][0]['message']})
     }
     const user_id = await req.user._id
     
