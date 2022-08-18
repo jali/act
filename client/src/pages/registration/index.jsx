@@ -1,6 +1,5 @@
 import React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -8,22 +7,9 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import Alert from '@mui/material/Alert';
 import { useForm, FormProvider } from 'react-hook-form';
+import Footer from 'components/layout/footer';
 import RegistrationForm from './form';
 import useProfile from 'features/profile/use';
-
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-            Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 export default function Registration() {
     const { handleSave, loading, error } = useProfile();
@@ -40,7 +26,6 @@ export default function Registration() {
 
   return (
     <Container component="main" maxWidth="xs">
-      
       {loading && <LinearProgress />}
       {error && <Alert severity="error">{error.data.info}</Alert>}
       <Box
@@ -57,15 +42,15 @@ export default function Registration() {
         <Typography component="h1" variant="h5">
           Complete your Profile
         </Typography>
-        <Box   noValidate sx={{ mt: 1 }}>
-          <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onError)}>
-                <RegistrationForm />
-            </form>
-          </FormProvider>
+        <Box noValidate sx={{ mt: 1 }}>
+            <FormProvider {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+                    <RegistrationForm />
+                </form>
+            </FormProvider>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Footer sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }

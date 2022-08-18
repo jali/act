@@ -29,6 +29,10 @@ export function postLogin(data) {
     return post(AUTH_BASE_URL + '/login', data);
 }
 
+export function postUser(data) {
+    return post(AUTH_BASE_URL + '/register', data);
+}
+
 export function decodedTokenData(token) {
     const decoded = JWT_DECODE(token);
     return decoded;

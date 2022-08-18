@@ -1,5 +1,13 @@
 import { all, call, put, fork, takeLatest } from 'redux-saga/effects';
-import { decodedTokenData, hasTokenExpired, postLogin, saveToken, getAuthToken, removeToken } from 'services/auth';
+import { 
+    decodedTokenData,
+    hasTokenExpired,
+    postLogin,
+    postUser,
+    saveToken,
+    getAuthToken,
+    removeToken
+} from 'services/auth';
 
 import * as actionSelectors from './slice';
 import * as profileActionSelectors from 'features/profile/slice';
@@ -38,10 +46,20 @@ export function* loadTokenSilent() {
     }
 }
 
+export function* createUserSaga(action) {
+    try {
+        const response = yield call(postUser, action.payload);
+        yield put(actionSelectors.success());
+    } catch (e) {
+        yield put(actionSelectors.error(e.response));
+    }
+}
+
 export default function* authSaga() {
     yield all([
         fork(loadTokenSilent),
         takeLatest(actionSelectors.login.type , loginSaga),
-        takeLatest(actionSelectors.logout.type , logoutSaga)
+        takeLatest(actionSelectors.logout.type , logoutSaga),
+        takeLatest(actionSelectors.save.type , createUserSaga)
     ]);
 }

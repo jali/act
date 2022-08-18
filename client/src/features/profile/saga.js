@@ -14,7 +14,7 @@ export function* getProfileSaga() {
         yield put(actionSelectors.success(profileResponse.data.profileInfo));
     } catch (error) {
         // handle error
-        yield put(actionSelectors.error(error));
+        yield put(actionSelectors.error(error.response));
     }
 }
 
@@ -23,7 +23,7 @@ export function* saveProfileSaga(action) {
         const response = yield call(postProfile, action.payload);
         yield put(actionSelectors.success(response));
     } catch (e) {
-        yield put(actionSelectors.error(e));
+        yield put(actionSelectors.error(e.response));
     }
 }
 

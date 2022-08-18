@@ -18,7 +18,6 @@ const useProfile = () => {
 
     React.useEffect(() => {
         if (success && data) {
-            console.log('attempt to navigate')
             navigate("/");
         }
     }, [success, data, navigate]);

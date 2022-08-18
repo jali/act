@@ -17,13 +17,18 @@ const useAuth = () => {
         dispatch(actionSelectors.login(values));
     }, [dispatch]);
 
+    const handleSave = useCallback((values) => {
+        dispatch(actionSelectors.save(values));
+    }, [dispatch]);
+
     return {
         data,
         error,
         loading,
         success,
         handleLogin,
-        handleLogout
+        handleLogout,
+        handleSave
     };
 };
 

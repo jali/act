@@ -22,6 +22,11 @@ const auth = createSlice({
             state.success = false;
             state.error = null;
         },
+        save(state) {
+            state.loading = true;
+            state.success = false;
+            state.error = null;
+        },
         login(state) {
             state.loading = true;
             state.success = false;
@@ -46,7 +51,7 @@ const auth = createSlice({
     }
 });
 
-export const {init, load, login, logout, success, error} = auth.actions;
+export const {init, load, save, login, logout, success, error} = auth.actions;
 
 const selectDomain = (state) => state.auth || initialState;
 export const selectLoading = createSelector([selectDomain], state => state.loading);
