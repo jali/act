@@ -87,12 +87,12 @@ module.exports = (app) => {
                 user = Object.assign(user, req.body)
                 user.save((err) => {
                     if (err) {
-                        res.status(500).send({info: 'error while updating user', error: err})
+                        res.status(400).send({info: 'error while updating user', error: err})
                     }
                     res.status(200).send({info: 'user has been updated successfully'})
                 })
             } else {
-                res.status(400).send({info: 'there is no such user', error: err})
+                res.status(404).send({info: 'there is no such user', error: err})
             }
         })
     })
@@ -116,10 +116,10 @@ module.exports = (app) => {
 
     // delete
     app.delete('/user/:id', (req, res) => {
-        return res.status(403).send({info: 'vorbidden'})
+        // return res.status(403).send({info: 'vorbidden'})
         User.findByIdAndDelete(req.params.id, (err) => {
             if (err) {
-                res.status(202).send({info: 'error while deleting user', error: err})
+                res.status(400).send({info: 'error while deleting user', error: err})
             }
             res.status(200).send({info: 'user deleted successfully'})
         })
@@ -133,7 +133,7 @@ module.exports = (app) => {
             if (users) {
                 res.status(200).send({info: 'records found successfully', data: users})
             } else {
-                res.status(400).send({info: 'could not find any record', error: err})
+                res.status(404).send({info: 'could not find any record', error: err})
             }
         })
     })
