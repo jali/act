@@ -1,6 +1,6 @@
-import { all, call, put, fork, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import * as actionSelectors from './slice';
-import { getProfile } from 'services/profile';
+import { getProfile, postProfile } from 'services/profile';
 
 
 
@@ -18,9 +18,18 @@ export function* getProfileSaga() {
     }
 }
 
+export function* saveProfileSaga(action) {
+    try {
+        const response = yield call(postProfile, action.payload);
+        yield put(actionSelectors.success(response));
+    } catch (e) {
+        yield put(actionSelectors.error(e));
+    }
+}
+
 export default function* profileSaga() {
     yield all([
-        takeLatest(actionSelectors.load.type, getProfileSaga)
-        // takeLatest(actionSelectors.save.type, saveProfileSaga)
+        takeLatest(actionSelectors.load.type, getProfileSaga),
+        takeLatest(actionSelectors.save.type, saveProfileSaga)
     ]);
 }

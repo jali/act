@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import LinearProgress from '@mui/material/LinearProgress';
 import Alert from '@mui/material/Alert';
 import { useForm, FormProvider } from 'react-hook-form';
 import RegistrationForm from './form';
@@ -40,7 +41,7 @@ export default function Registration() {
   return (
     <Container component="main" maxWidth="xs">
       
-      {loading && <i>loading...</i>}
+      {loading && <LinearProgress />}
       {error && <Alert severity="error">{error.data.info}</Alert>}
       <Box
         sx={{
