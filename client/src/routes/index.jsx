@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import PrivateRoute from './private-route';
 import GuestOnlyRoute from './guest-only-route';
 import Home from 'pages/home';
@@ -15,9 +15,9 @@ export default function AppRoutes() {
     const { success: profileSuccess, data: regIsDone } = useProfile();
     
     return (
-        <Router>
+        <>
             <Routes>
-            <Route 
+                <Route 
                     exact path='/' 
                     element={
                         profileSuccess && !regIsDone ? (
@@ -61,6 +61,6 @@ export default function AppRoutes() {
                 />
                 <Route path='*' element={<NotFound />} data-testid='app-route-not-found' />
             </Routes>
-        </Router>
+        </>
     );
 };
