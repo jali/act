@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
+import { Link } from 'react-router-dom';
 import useAuth from 'features/auth/use';
 
 export default function BasicMenu() {
@@ -37,8 +38,8 @@ export default function BasicMenu() {
                 'aria-labelledby': 'basic-button',
             }}
             >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem component={Link} to="/profile">Profile</MenuItem>
+            <MenuItem component={Link} to="/">Dashboard</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </div>

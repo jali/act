@@ -48,7 +48,7 @@ export function* loadTokenSilent() {
 
 export function* createUserSaga(action) {
     try {
-        const response = yield call(postUser, action.payload);
+        yield call(postUser, action.payload);
         yield put(actionSelectors.success());
     } catch (e) {
         yield put(actionSelectors.error(e.response));

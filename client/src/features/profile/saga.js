@@ -20,8 +20,9 @@ export function* getProfileSaga() {
 
 export function* saveProfileSaga(action) {
     try {
-        const response = yield call(postProfile, action.payload);
-        yield put(actionSelectors.success(response));
+        yield call(postProfile, action.payload);
+        yield put(actionSelectors.success());
+        yield put(actionSelectors.saved());
     } catch (e) {
         yield put(actionSelectors.error(e.response));
     }

@@ -1,15 +1,9 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TextField from 'components/form/text-field';
 
 const RegistrationForm = () => {
-    // const [value, setValue] = React.useState(new Date());
-
-    // const handleChange = (newValue) => {
-    //     setValue(newValue);
-    // };
     return(
         <>
             <Grid container spacing={2}>
@@ -41,18 +35,14 @@ const RegistrationForm = () => {
                     required
                     fullWidth
                     id="birthday"
+                    type="date"
                     label="Date of birth"
                     name="birthday"
-                    autoComplete="dob"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     rules={{ required: "Required!" }}
                 />
-                {/* <DesktopDatePicker
-                    label="Date of birth"
-                    inputFormat="dd/MM/yyyy"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                    /> */}
                 </Grid>
             </Grid>
             <Button

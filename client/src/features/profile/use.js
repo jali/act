@@ -11,21 +11,19 @@ const useProfile = () => {
     const error = useSelector(actionSelectors.selectError);
     const success = useSelector(actionSelectors.selectSuccess);
     const data = useSelector(actionSelectors.selectData);
+    const saved = useSelector(actionSelectors.selectSaved);
     
     const handleSave = useCallback((values) => {
         dispatch(actionSelectors.save(values));
     }, [dispatch]);
 
     React.useEffect(() => {
-        if (success && data) {
-            navigate("/");
+        if (saved) {
+            dispatch(actionSelectors.load());
+            navigate("/profile");
         }
-    }, [success, data, navigate]);
+    }, [success, saved, navigate, dispatch]);
     
-    // React.useEffect(() => {
-    //     dispatch(actionSelectors.load());
-    //     return () => dispatch(actionSelectors.init());
-    // }, [dispatch]);
 
     return {
         data,

@@ -7,6 +7,7 @@ import NotFound from 'pages/not-found';
 import SignIn from 'pages/login';
 import SignUp from 'pages/register';
 import Registration from 'pages/registration';
+import Profile from 'pages/profile';
 import useAuth from 'features/auth/use';
 import useProfile from 'features/profile/use';
 
@@ -29,6 +30,15 @@ export default function AppRoutes() {
                         )
                         } 
                     data-testid='app-route-home'
+                />
+                <Route 
+                    exact path='/profile' 
+                    element={
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
+                        } 
+                    data-testid='app-route-profile'
                 />
                 <Route 
                     path='/login' 
