@@ -11,6 +11,7 @@ const useVisionList = () => {
 
     React.useEffect(() => {
         dispatch(actionSelectors.load());
+        return () =>  dispatch(actionSelectors.init());
     }, [dispatch]);
 
     return {
