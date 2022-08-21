@@ -36,9 +36,9 @@ router.get('/vision', jwt.verifyToken, async(req, res) => {
     // get own record without param
     const user_id = await req.user._id
     try {
-        const visionInfo = await Vision.findOne({user_id: user_id})
+        const visionInfo = await Vision.find({user_id: user_id})
         if (visionInfo) {
-            res.status(200).send({info: 'vision found successfully', data: visionInfo})
+            res.status(200).send({info: 'vision found successfully', visionInfo})
         } else {
             res.status(204).send({})
         }
