@@ -1,5 +1,4 @@
 import React from 'react';
-
 import LinearProgress from '@mui/material/LinearProgress';
 import Alert from '@mui/material/Alert';
 import Layout from 'components/layout';
