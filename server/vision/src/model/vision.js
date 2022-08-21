@@ -4,7 +4,7 @@ const visionSchema = mongoose.Schema({
     title: {
         type: String
     },
-    destription: {
+    description: {
         type: String
     },
     author_id: {
