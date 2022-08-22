@@ -32,6 +32,15 @@ export default function AppRoutes() {
                     data-testid='app-route-home'
                 />
                 <Route 
+                    exact path='/vision/:id' 
+                    element={
+                            <PrivateRoute>
+                                <Vision />
+                            </PrivateRoute>
+                        } 
+                    data-testid='app-route-vision'
+                />
+                <Route 
                     exact path='/profile' 
                     element={
                             <PrivateRoute>

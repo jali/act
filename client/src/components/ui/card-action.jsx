@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
@@ -11,9 +11,9 @@ export default function CardAction({data, ...rest}) {
     let renderLinks = [];
     if (links) {
         links.map((v, k) => {
-            renderLinks.push(<Button key={k} size="small" color="primary">
+            renderLinks.push(<Link to={`/vision/${data._id}`} key={k} size="small" color="primary">
             {v}
-            </Button>)
+            </Link>)
         });
     }
     return (
